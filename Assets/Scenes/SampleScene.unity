@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -150,7 +150,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
@@ -340,9 +340,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1612842350}
-  _moveSpeed: 2
+  _moveSpeed: 5
   _aggroRadius: 5
   _returnToOriginRadius: 15
+  Hunger: 0
+  HungerIncrease: 5
+  GoSeekingForFoodLevel: 6000
   _aggroMat: {fileID: 2100000, guid: 0a7f17f6b90e4164085a8f3729ac6443, type: 2}
   _neutralMat: {fileID: 2100000, guid: 3fe7a44d4b9a15f4882a6602eb5f3e7a, type: 2}
   _returningMat: {fileID: 2100000, guid: 925486ca696384345b3caf63c781bba8, type: 2}

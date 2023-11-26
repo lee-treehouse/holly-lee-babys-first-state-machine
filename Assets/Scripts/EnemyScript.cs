@@ -8,6 +8,10 @@ public class EnemyScript : MonoBehaviour
     public float _moveSpeed = 4;
     public float _aggroRadius = 5;
     public float _returnToOriginRadius = 15;
+    public int Hunger = 0;
+    public int HungerIncrease = 5;
+    public int GoSeekingForFoodLevel = 6000;
+    public Transform _food;
 
     public Material _aggroMat;
     public Material _neutralMat;
@@ -22,7 +26,7 @@ public class EnemyScript : MonoBehaviour
         Idle,
         Aggro,
         ReturnToOrigin,
-        Melee
+        SeekingNomNom
     }
 
     [SerializeField]
@@ -33,12 +37,21 @@ public class EnemyScript : MonoBehaviour
     {
         _distanceToPlayer = Vector3.Distance(transform.position, _player.position);
 
-        if(_curState == EnemyState.Idle)
+        if (_curState == EnemyState.Idle)
             UpdateIdle();
-        else if(_curState == EnemyState.Aggro)
+        else if (_curState == EnemyState.Aggro)
             UpdateAggro();
-        else if(_curState == EnemyState.ReturnToOrigin)
+        else if (_curState == EnemyState.ReturnToOrigin)
             UpdateReturnToOrigin();
+        else if (_curState == EnemyState.SeekingNomNom)
+            UpdateSeekingNomNom();
+    }
+    private void FixedUpdate()
+    {
+        if(Hunger < 10000)
+        {
+            Hunger = Hunger + HungerIncrease;
+        }
     }
 
     private void UpdateIdle()
@@ -47,6 +60,12 @@ public class EnemyScript : MonoBehaviour
 
         if (_distanceToPlayer <= _aggroRadius)
             _curState = EnemyState.Aggro;
+        else if (Hunger >= GoSeekingForFoodLevel)
+            _curState = EnemyState.SeekingNomNom;
+    }
+    private void UpdateSeekingNomNom()
+    {
+        MoveToFood();
     }
 
     private void UpdateAggro()
@@ -77,6 +96,11 @@ public class EnemyScript : MonoBehaviour
     void MoveToPlayer()
     {
         transform.position += (_player.position - transform.position).normalized * Time.deltaTime * _moveSpeed;
+    }
+    void MoveToFood()
+    {
+        // To do:
+        transform.position += (_food.position - transform.position).normalized * Time.deltaTime * _moveSpeed;
     }
 
     #region Offtopic & Init Stuff
