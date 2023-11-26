@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour
     public int Hunger = 0;
     public int HungerIncrease = 5;
     public int GoSeekingForFoodLevel = 6000;
+    public int StopSeekingForFoodLevel = 500;
     public Transform _food;
 
     public Material _aggroMat;
@@ -31,8 +32,6 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField]
     private EnemyState _curState;
-
-
     void Update()
     {
         _distanceToPlayer = Vector3.Distance(transform.position, _player.position);
@@ -66,6 +65,12 @@ public class EnemyScript : MonoBehaviour
     private void UpdateSeekingNomNom()
     {
         MoveToFood();
+        float distanceToFood = Vector3.Distance(_food.transform.position, transform.position);
+        if (distanceToFood < 0.05)
+        {
+            Hunger = 0;
+            _curState = EnemyState.ReturnToOrigin;
+        }
     }
 
     private void UpdateAggro()
@@ -86,7 +91,7 @@ public class EnemyScript : MonoBehaviour
         float distanceToOrigin = Vector3.Distance(_originPos, transform.position);
         if (distanceToOrigin <= 0.05f)
             _curState = EnemyState.Idle;
-    }
+    } 
 
     void MoveToOriginPos()
     {
